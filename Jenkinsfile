@@ -1,30 +1,30 @@
-pipeline {
+pipeline
+{
     agent any
-
-
-
-    stages {
-        stage('Initialize'){
-            steps{
-                echo "PATH = ${M2_HOME}/bin:${PATH}"
-                echo "M2_HOME = /opt/maven"
+    environment 
+    {
+        MAVEN_GOALS = 'clean install'        // Define the Maven goals for building the project  
+    }
+    stages
+    {
+        
+        stage('Build')
+        {
+            steps
+            {
+                 sh "mvn ${MAVEN_GOALS}"
             }
         }
-        stage('Build') {
-            steps {
-                dir("/var/lib/jenkins/workspace/New_demo/my-app/") {
-                sh 'mvn -B -DskipTests clean package'
-                }
-            
-            }
+    }
+    post
+    {
+        success
+        {
+            echo "Build successful!"
         }
-     }
-    post {
-       always {
-          junit(
-        allowEmptyResults: true,
-        testResults: '*/test-reports/.xml'
-      )
-      }
-   } 
+        failure 
+        {
+            echo "Build failed!"
+        }
+    }
 }
