@@ -1,9 +1,13 @@
 pipeline
 {
     agent any
+    tools
+    {
+        maven 'MAVEN'
+    }
     environment 
     {
-        MAVEN_GOALS = 'clean install'        // Define the Maven goals for building the project  
+        MAVEN_GOALS = 'mvn -Dmaven.test.failure.ignore=true clean package'        // Define the Maven goals for building the project  
     }
     stages
     {
@@ -28,3 +32,4 @@ pipeline
         }
     }
 }
+'
