@@ -1,10 +1,7 @@
 pipeline
 {
     agent any
-    tools
-    {
-        maven 'MAVEN'
-    }
+    
     environment 
     {
         MAVEN_GOALS = 'mvn -Dmaven.test.failure.ignore=true clean package'        // Define the Maven goals for building the project  
